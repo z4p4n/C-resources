@@ -1,0 +1,64 @@
+are some external functions
+;
+        extern	printf		; the C function, to be called
+
+        SECTION .data		; Data section, initialized variables
+
+	a:	dd	5		; int a=5;
+fmt:    db "a=%d, eax=%d", 10, 0 ; The printf format, "\n",'0'
+
+
+        SECTION .text                   ; Code section.
+
+        global main		; the standard gcc entry point
+main:				; the program label for the entry point
+        push    ebp		; set up stack frame
+        mov     ebp,esp
+
+		mov	eax, [a]	; put a from store into register
+		add	eax, 2		; a+2
+		push	eax		; value of a+2
+
+		push    dword [a]	; value of variable a
+        push    dword fmt	; address of ctrl string
+        call    printf		; Call C function
+        add     esp, 12		; pop stack 3 push times 4 bytes
+
+        mov     esp, ebp	; takedown stack frame
+        pop     ebp		; same as "leave" op
+        jmp main
+
+		mov	eax,0		;  normal, no error, return value
+		ret			; return
+
+function1:
+
+		mov eax, 2
+		mov eax, 2
+jump1:
+		mov eax, 2
+		mov eax, 2
+		je jump1
+		mov eax, 2
+		mov eax, 2
+		mov eax, 2
+		jne jump2
+		mov eax, 2
+		mov eax, 2
+		mov eax, 2
+jump2:
+		move eax, 3
+		move eax, 3
+		jmp jump3
+jump4:
+		move eax, 3
+		move eax, 3
+		move eax, 3
+jump3:
+		move eax, 3
+		je jump4
+		move eax, 3
+		move eax, 3
+		move eax, 3
+		ret
+		
