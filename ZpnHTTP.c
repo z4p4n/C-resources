@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "ZpnError.h"
+#include "ZpnString.h"
 #include "ZpnRegex.h"
 #include "ZpnSocket.h"
 #include "ZpnHTTP.h"

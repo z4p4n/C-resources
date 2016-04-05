@@ -4,6 +4,7 @@
 #include <regex.h>
 #include <string.h>
 
+#include "ZpnString.h"
 #include "ZpnRegex.h"
 #include "ZpnError.h"
 
@@ -11,51 +12,15 @@ extern int __zpn_error__;
 extern int __zpn_error_type__;
 extern regex_t __zpn_preg__;
 
-/* zpn_clean_str clean str_struct 		*
- * -------------------------------------------- *
- * p_zpn_str str_struct : struct to free	*/
-void zpn_clean_str (p_zpn_str str_struct) {
-
-	str_struct->next = NULL;
-	str_struct->str  = NULL;
-	str_struct->n  = 0;
-}
-
-/* zpn_free_str free str_struct 		*
- * -------------------------------------------- *
- * p_zpn_str str_struct : struct to free	*/
-void zpn_free_str (p_zpn_str str_struct) {
-
-	p_zpn_str tmp1 = str_struct, tmp2 = NULL;
-	int i;
-
-	while (tmp1 != NULL) {
-
-		
-		if (tmp1->str != NULL) {
-
-			for (i = 0 ; i < tmp1->n ; i++) 
-				free (tmp1->str[i]);
-			free (tmp1->str);
-		}
-
-		tmp2 = tmp1->next;
-		free (tmp1);
-		tmp1 = tmp2;
-	}
-
-	return;
-}
-
-/* zpn_regex_get match and store in a struct a specific pattern		*
+/* zpn_regex_get match and store in a struct a specific pattern	        *
  * -------------------------------------------------------------------- *
- * char *str_request       : the string you want analyze		*
- * const char *str_regex   : the pattern you want to use		*
- * p_zpn_str *str_struct   : the structure where match will be stored	*
+ * char *str_request       : the string you want analyze                *
+ * const char *str_regex   : the pattern you want to use                *
+ * p_zpn_str *str_struct   : the structure where match will be stored   *
  * -------------------------------------------------------------------- *
- * return : number of element(s) matched (>0) if match,			*
- *          ZPN_REGEX_NO_MATCH if no string was found, 			*
- *          ZPN_ERROR if fail due to error				*/
+ * return : number of element(s) matched (>0) if match,                 *
+ *          ZPN_REGEX_NO_MATCH if no string was found,                  *
+ *          ZPN_ERROR if fail due to error                              */
 int zpn_regex_get (char *str_request, const char *str_regex, p_zpn_str *str_struct) {
 
 	int nb_match = 0, ret, i, match, start, end;
@@ -145,14 +110,16 @@ int zpn_regex_get (char *str_request, const char *str_regex, p_zpn_str *str_stru
 
 		} else if (match != REG_NOMATCH) {
 
-			free (pmatch);
 			SET_ERROR (ZPN_ERROR_REGEX, ret);
+			free (pmatch);
+			zpn_free_str (*str_struct);
 			return ZPN_ERROR;
 		}
 	
 	} else {		
 
 		SET_ERROR (ZPN_ERROR_REGEX, ret);
+		zpn_free_str (*str_struct);
 		return ZPN_ERROR;
 	}
 
@@ -161,13 +128,13 @@ int zpn_regex_get (char *str_request, const char *str_regex, p_zpn_str *str_stru
 	return nb_match;
 }
 
-/* This function match a string with regex				*
+/* This function match a string with regex	                            *
  * -------------------------------------------------------------------- *	
- * const char *str_request : the string you want analyze		*
- * const char *str_regex   : the pattern you want to use		*
+ * const char *str_request : the string you want analyze                *
+ * const char *str_regex   : the pattern you want to use                *
  * -------------------------------------------------------------------- *	
  * return : ZPN_REGEX_MATCH if match ZPN_REGEX_NO_MATCH if match fail, 	*
- *          ZPN_ERROR if fail due to error				*/
+ *          ZPN_ERROR if fail due to error                              */
 int zpn_regex_match (const char *str_request, const char *str_regex) {
 
 	int ret, match;
