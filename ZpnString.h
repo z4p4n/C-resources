@@ -18,7 +18,7 @@ struct _zpn_str {
 /* zpn_clean_str clean str_struct               *
  * -------------------------------------------- *
  * p_zpn_str str_struct : struct to free        */
-void zpn_clean_str (p_zpn_str str_struct) {
+void zpn_clean_str (p_zpn_str str_struct);
 
 /* zpn_free_str free str_struct                 *
  * -------------------------------------------- *
