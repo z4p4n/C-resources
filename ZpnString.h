@@ -15,9 +15,14 @@ struct _zpn_str {
 
 };
 
-/* zpn_free_str free str_struct 		*
+/* zpn_clean_str clean str_struct               *
  * -------------------------------------------- *
- * p_zpn_str str_struct : struct to free	*/
+ * p_zpn_str str_struct : struct to free        */
+void zpn_clean_str (p_zpn_str str_struct) {
+
+/* zpn_free_str free str_struct                 *
+ * -------------------------------------------- *
+ * p_zpn_str str_struct : struct to free        */
 void zpn_free_str (p_zpn_str str_struct);
 
 /* zpn_add_str add str to str_struct                    *
