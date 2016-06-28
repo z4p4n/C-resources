@@ -232,8 +232,7 @@ int write_hlpsl_from_ksat (p_cnf cnf, const char *path) {
 			fprintf (fd, "X%d'", abs (cnf->cnf[i][j])); 
 		}
 	}
-	fprintf (fd, ".MEnd}_Key)\n\t\t2. State=1 /\\ RCV(Secret') =|> State':=2 /\\ "
-	  "secret(Secret',sec,{})\nend role\n\n");
+	fprintf (fd, ".MEnd}_Key)\nend role\n\n");
 
 	/* Write C1 to C(nb clauses) */
 	for (i = 0 ; i < cnf->cla ; i++) {
