@@ -292,7 +292,7 @@ int write_hlpsl_from_ksat (p_cnf cnf, const char *path) {
 	
 	/* Write environment function role */
 	fprintf (fd, "role environment()\ndef=\n\tconst\n"
-		"\t\thash_0:function,pk1:public_key,pk2:public_key,pk3:public_key,pk4:public_key"
+		"\t\tpk1:public_key,pk2:public_key,pk3:public_key,pk4:public_key"
 	    ",sec:protocol_id");
 	for (i = 0 ; i < cnf->cla + 1; i++) fprintf (fd, ",c%d:agent", i);
 	fprintf (fd, ",theend:agent");

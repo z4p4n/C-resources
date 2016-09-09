@@ -1,9 +1,9 @@
 CC=gcc
 CFLAGS=-c -Wall
 LDFLAGS=
-SOURCES=dump_iloveradio.c ../../ZpnError.c ../../ZpnHTTP.c ../../ZpnSocket.c ../../ZpnRegex.c ../../ZpnString.c
+SOURCES=test_tor.c ../../ZpnError.c ../../ZpnHTTP.c ../../ZpnSocket.c ../../ZpnRegex.c ../../ZpnString.c ../../ZpnTor.c
 OBJECTS=$(SOURCES:.c=.o)
-EXECUTABLE=dump_iloveradio
+EXECUTABLE=torrify
 
 all: $(SOURCES) $(EXECUTABLE)
     
@@ -15,4 +15,4 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm -R *.o dump_iloveradio advertising
+	rm -R *.o $(EXECUTABLE)
